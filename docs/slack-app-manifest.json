@@ -1,0 +1,20 @@
+{
+  "display_information": {
+    "name": "Calendar Slack Status",
+    "description": "Calendar-based status and notification switching",
+    "background_color": "#e9eee8"
+  },
+  "oauth_config": {
+    "redirect_urls": [
+      "https://script.google.com/macros/s/REPLACE_WITH_SCRIPT_ID/exec"
+    ],
+    "scopes": {
+      "user": ["users.profile:read", "users.profile:write", "dnd:write"]
+    }
+  },
+  "settings": {
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": false
+  }
+}

@@ -36,7 +36,7 @@ if (!preview) {
     globalName: 'Server',
     target: 'es2020',
     footer: {
-      js: 'function doGet(){return Server.doGet();}\nfunction getSettings(locale){return Server.getSettings(locale);}\nfunction saveSettings(value){return Server.saveSettings(value);}\nfunction listUpcomingEvents(){return Server.listUpcomingEvents();}',
+      js: 'function doGet(e){return Server.doGet(e);}\nfunction getSettings(locale){return Server.getSettings(locale);}\nfunction saveSettings(value){return Server.saveSettings(value);}\nfunction listUpcomingEvents(){return Server.listUpcomingEvents();}\nfunction getAuthUrl(){return Server.getAuthUrl();}\nfunction getConnection(){return Server.getConnection();}\nfunction disconnect(){return Server.disconnect();}\nfunction tick(){return Server.tick();}\nfunction checkNow(){return Server.checkNow();}',
     },
   });
   await copyFile('src/appsscript.json', 'dist/appsscript.json');

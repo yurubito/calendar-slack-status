@@ -1,5 +1,21 @@
 export const messages = {
   en: {
+    connected: 'Connected to',
+    reconnect: 'Please reconnect Slack.',
+    reconnectMail:
+      'Slack authorization is no longer valid. Open the Calendar Slack Status app and reconnect Slack. / Slackの認証が無効です。',
+    confirmDisconnect: 'Disconnect Slack and stop automatic switching?',
+    lastCheck: 'Last check',
+    lastResult: 'Last result',
+    resultApplied: 'Applied',
+    resultNothing: 'No changes needed',
+    resultDryRun: 'Dry run (no writes)',
+    resultError: 'Error',
+    checkNow: 'Check now',
+    oauthSuccess: 'Slack connected. Automatic switching is enabled.',
+    oauthError:
+      'Slack connection failed. The authorization may be expired, already used, invalid, or declined. Return to the app and try connecting again.',
+    backToApp: 'Back to app',
     noKeyword: '(no keyword)',
     eventTitle: '(event title)',
     disabled: 'Disabled',
@@ -22,8 +38,7 @@ export const messages = {
     error: 'Something went wrong. Please try again.',
     pauseDuring: 'Pause notifications during events',
     reflection: 'How to reflect events in your status',
-    notConnected:
-      'Slack is not connected yet. Connection will be available in Phase 3.',
+    notConnected: 'Slack is not connected.',
     title: 'Event title',
     fixed: 'Custom',
     none: 'None',
@@ -72,6 +87,22 @@ export const messages = {
     actions: 'Actions',
   },
   ja: {
+    connected: '接続先',
+    reconnect: 'Slackとつなぎ直してください。',
+    reconnectMail:
+      'Slackの認証が無効になりました。Calendar Slack Statusの接続ページからSlackとつなぎ直してください。',
+    confirmDisconnect: 'Slackとの接続を解除し、自動切り替えを停止しますか？',
+    lastCheck: '最終確認',
+    lastResult: '前回の結果',
+    resultApplied: '適用しました',
+    resultNothing: '変更はありません',
+    resultDryRun: 'お試し実行（書き込みなし）',
+    resultError: 'エラー',
+    checkNow: '今すぐ確認',
+    oauthSuccess: 'Slackと接続しました。自動切り替えを開始します。',
+    oauthError:
+      'Slackに接続できませんでした。認証が期限切れ、使用済み、無効、または拒否された可能性があります。アプリに戻って接続をやり直してください。',
+    backToApp: 'アプリに戻る',
     noKeyword: '（キーワードなし）',
     eventTitle: '（予定名）',
     disabled: '無効',
@@ -94,7 +125,7 @@ export const messages = {
     error: '処理に失敗しました。もう一度お試しください。',
     pauseDuring: '予定中は通知を止める',
     reflection: 'ステータスへの反映方式',
-    notConnected: 'Slackは未接続です。フェーズ3で接続できるようになります。',
+    notConnected: 'Slackは未接続です。',
     title: '予定名',
     fixed: 'カスタム',
     none: 'なし',
