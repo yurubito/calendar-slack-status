@@ -4,3 +4,5 @@ dist/
 .clasprc.json
 .env
 *.log
+preview/
+.npm-cache/
