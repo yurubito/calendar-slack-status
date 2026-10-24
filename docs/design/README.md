@@ -1,5 +1,13 @@
 # Settings screen design proposals / 設定画面デザイン案
 
+## Decision / 決定 (2026-10-25)
+
+**EN:** The owner chose **Soft Flow**, with one change: a **header navigation menu** (taken from Control Desk's idea) so each page shows less. Pages: Home (pause button and auto switch) / Display mode / Keyword rules / Today's events / Connection. On mobile the header menu is a horizontally scrollable tab bar. Mobile keyword rules stay as one card per rule; desktop keeps a table. Phase 2 builds this. The two other directions stay here as reference only.
+
+**JA:** オーナーは **Soft Flow** を選びました。変更点は1つ。Control Desk のメニューのように **ヘッダーにナビゲーション** を置き、1ページに出す内容を減らします。ページは、ホーム（通知ボタンと自動切り替え）／表示のモード／キーワードのルール／今日の予定／接続。スマホではヘッダーのメニューを横にスクロールできるタブにします。スマホのルールは1件ずつのカード、PCは表のままです。フェーズ2でこの形で作ります。ほかの2案は参考として残します。
+
+The sections below describe the three Phase 0 proposals as submitted. / 以下は提出時の3案の説明です。
+
 ## English
 
 Phase 0 only. Three offline HTML/CSS studies with deliberately different structures. All files are UTF-8 without BOM; no application code, external assets, dependencies or service calls.
@@ -11,7 +19,7 @@ Phase 0 only. Three offline HTML/CSS studies with deliberately different structu
 | [Bright Blocks](bright-blocks.md) | Colorful bento grid, chunky controls and horizontal desktop event cards on a timeline. | [Mobile](bright-blocks/mobile.html) · [Desktop](bright-blocks/desktop.html) |
 
 ### Review and capture
-Open the HTML locally at 100% zoom. Use **390px mobile** and **1280px desktop** viewports, with full-page captures. Existing PNGs are from the earlier revision: ignore them until the owner's assistant retakes screenshots. No build or network access is required.
+Open the HTML locally at 100% zoom. Use **390px mobile** and **1280px desktop** viewports, with full-page captures. The `mobile.png` / `desktop.png` files in each folder are full-page captures of the current mockups. No build or network access is required.
 
 Mobile keyword rules are **individual editor cards**, as confirmed by the owner. Desktop rules use a table in its own scroll container. Bright Blocks converts its horizontal desktop timeline to vertical full-width event cards on mobile. Mobile pages are fluid below their 390px maximum; desktop pages also adapt to smaller viewports.
 
@@ -32,7 +40,7 @@ Screenshots, gitleaks and the PR remain the owner's assistant's tasks. No branch
 | [Bright Blocks](bright-blocks.md) | 色のブロックを大小で組み合わせ、厚いボタンとPCで横並びの予定タイムラインを配置。 | [スマホ](bright-blocks/mobile.html) · [PC](bright-blocks/desktop.html) |
 
 ### 確認と撮影
-HTMLをローカルで開き、ズーム100%、**スマホ幅390px／PC幅1280px**でページ全体を撮影してください。既存PNGは旧版なので、オーナーのアシスタントが撮影し直すまで無視してください。ビルド・ネット接続は不要です。
+HTMLをローカルで開き、ズーム100%、**スマホ幅390px／PC幅1280px**でページ全体を撮影してください。各フォルダの `mobile.png` / `desktop.png` は、現在のモックのページ全体の画像です。ビルド・ネット接続は不要です。
 
 スマホのキーワードは、回答に従って**1ルール1編集カード**に変更しました。PCの表は専用の横スクロール領域に収めています。Bright Blocksの横並びタイムラインはスマホで縦軸と全幅カードへ切り替わります。スマホ版は最大390pxの範囲で縮み、PC版も狭い画面に対応します。
 
