@@ -435,3 +435,9 @@ footer {
   flex-wrap: wrap;
   gap: 12px;
 }
+.reconnect-banner {
+  border: 2px solid #9b641e;
+  background: #fff2d8;
+  color: #65400f;
+  font-weight: 700;
+}

@@ -5,7 +5,28 @@ import { upcomingWindow } from '../adapters/calendar-time';
 const timeZone = 'Asia/Tokyo';
 let settings: Settings = defaultSettings('sample');
 let initialized = false;
+let connection =
+  new URLSearchParams(location.search).get('connection') ?? 'not_connected';
 const methods: Record<string, (...args: unknown[]) => unknown> = {
+  getConnection() {
+    return {
+      connection,
+      team: 'Sample team',
+      lastRun: connection === 'not_connected' ? undefined : Date.now(),
+      lastResult: 'dry_run',
+    };
+  },
+  getAuthUrl() {
+    connection = 'connected';
+    return location.pathname + '?connection=connected';
+  },
+  disconnect() {
+    connection = 'not_connected';
+    return methods.getConnection();
+  },
+  checkNow() {
+    return methods.getConnection();
+  },
   getSettings(locale) {
     if (!initialized) {
       settings = {

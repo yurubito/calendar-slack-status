@@ -18,7 +18,13 @@ it('starts Display mode directly with its only settings card and keeps the save 
   expect(source).toContain('class="savebar"');
 });
 
-it('keeps both connection actions disabled until Phase 3', () => {
-  expect(source).toContain("button('connect', 'connect', 'disabled')");
-  expect(source).toContain("button('disconnect', 'disconnect', 'disabled')");
+it('wires connection actions to server with top navigation and confirmation', () => {
+  expect(source).toContain(
+    "window.open(await call<string>('getAuthUrl'), '_top')",
+  );
+  expect(source).toContain("window.confirm(t('confirmDisconnect'))");
+  expect(source).toContain('reconnectBanner(connection, locale)');
+  expect(source).toContain(
+    "connection = await call<Connection>('getConnection')",
+  );
 });
