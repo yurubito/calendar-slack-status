@@ -49,8 +49,9 @@ export function sanitizeSettings(
         : 'title',
     fixedText: str(r.fixedText, d.fixedText),
     emoji: str(r.emoji, d.emoji),
-    prefix: str(r.prefix),
-    maxLength: num(r.maxLength, 100, 1, 100),
+    // These former UI settings now always use the Slack-compatible defaults.
+    prefix: '',
+    maxLength: 100,
     pauseNotifications: bool(r.pauseNotifications, false),
     ignoreAllDay: bool(r.ignoreAllDay, true),
     ignoreFree: bool(r.ignoreFree, true),

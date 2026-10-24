@@ -10,6 +10,18 @@ const rule: Rule = {
   match: 'contains',
 };
 describe('rule summaries', () => {
+  it('uses the owner wording for status text labels and event-title placeholders', () => {
+    expect(messages.ja.text).toBe('ステータス名');
+    expect(messages.ja.fixedText).toBe('ステータス名');
+    expect(messages.en.text).toBe('Status text');
+    expect(messages.en.fixedText).toBe('Status text');
+    expect(ruleSummary({ ...rule, text: '' }, 'ja').fullText).toBe(
+      'Lesson → （予定名）',
+    );
+    expect(ruleSummary({ ...rule, text: '' }, 'en').fullText).toBe(
+      'Lesson → (event title)',
+    );
+  });
   it('orders keyword, exact match, arrow, text, emoji and badges', () => {
     expect(
       ruleSummary(

@@ -90,15 +90,28 @@ footer {
   background: var(--surface);
   margin: 24px 0;
 }
-.hero {
+.notification-panel {
   background: var(--tint);
-  text-align: center;
-  padding: 40px 60px;
 }
-.hero > .field {
+.notification-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.notification-control .switch-control {
+  font-size: 18px;
+  font-weight: 700;
+}
+.switch-state {
+  margin: 8px 0 0;
+}
+#pause-duration {
   max-width: 380px;
-  margin: 16px auto;
-  text-align: left;
+  margin-top: 18px;
+}
+.section-title {
+  font-size: 19px;
+  font-weight: 700;
 }
 .primary {
   background: var(--accent);
@@ -150,27 +163,15 @@ select {
   width: 100%;
   background: white;
 }
-.pause-button {
-  display: block;
-  width: min(100%, 380px);
-  min-height: 92px;
-  margin: 24px auto;
-  border-radius: 999px;
-  font-size: 21px;
-}
-.auto {
-  margin-top: 24px;
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-}
-.check {
+.check,
+.switch-control {
   display: flex;
   align-items: center;
   gap: 10px;
   min-height: 44px;
 }
-.hero .check {
-  justify-content: center;
+.switch-control {
+  cursor: pointer;
 }
 .switch {
   appearance: none;
@@ -180,6 +181,7 @@ select {
   border-radius: 99px;
   position: relative;
   flex-shrink: 0;
+  margin: 0;
 }
 .switch:checked {
   background: var(--accent);
@@ -196,6 +198,17 @@ select {
 }
 .switch:checked:before {
   transform: translateX(20px);
+}
+.notification-control .switch {
+  width: 60px;
+  height: 36px;
+}
+.notification-control .switch::before {
+  width: 28px;
+  height: 28px;
+}
+.notification-control .switch:checked::before {
+  transform: translateX(24px);
 }
 .fields {
   display: grid;
@@ -265,6 +278,13 @@ td input[type='text'] {
 }
 td .check {
   font-size: 12px;
+}
+/* Dim each part instead of the parent so the enable control stays fully visible. */
+.desktop-rules tr.is-disabled > td:not(:first-child),
+.rule-card.is-disabled > summary .rule-summary-line,
+.rule-card.is-disabled > summary::before,
+.rule-card.is-disabled .rule-editor > :not(.enable-control) {
+  opacity: 0.5;
 }
 td select[data-key='match'] {
   min-width: 8em;
@@ -395,11 +415,8 @@ footer {
   .panel {
     padding: 22px 18px;
   }
-  .hero {
-    padding: 28px 20px;
-  }
-  .pause-button {
-    min-height: 88px;
+  .notification-controls {
+    grid-template-columns: 1fr;
   }
   .fields {
     grid-template-columns: 1fr;

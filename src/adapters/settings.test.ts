@@ -67,6 +67,36 @@ describe('stored settings', () => {
         { maxLength: 0, beforeMinutes: 9999, afterMinutes: '5' },
         'p',
       ),
-    ).toMatchObject({ maxLength: 1, beforeMinutes: 1440, afterMinutes: 0 });
+    ).toMatchObject({ maxLength: 100, beforeMinutes: 1440, afterMinutes: 0 });
+  });
+  it('loads legacy hidden fields using fixed defaults while preserving other preferences', () => {
+    const legacy = {
+      ...defaultSettings('primary'),
+      displayMode: 'fixed',
+      fixedText: 'Learning',
+      prefix: 'Legacy prefix ',
+      maxLength: 25,
+      automatic: false,
+      rules: [
+        { keyword: 'Lesson', text: 'Learning', enabled: false, match: 'exact' },
+      ],
+    };
+    const settings = decodeSettings(
+      JSON.stringify({ version: 1, settings: legacy }),
+      'primary',
+    );
+    expect(settings).toEqual({ ...legacy, prefix: '', maxLength: 100 });
+    expect(legacy.prefix).toBe('Legacy prefix ');
+  });
+  it.each([
+    { prefix: { invalid: true }, maxLength: 'invalid' },
+    { prefix: 42, maxLength: -1 },
+    { prefix: null, maxLength: Number.NaN },
+    {},
+  ])('always normalizes removed UI fields: %j', (fields) => {
+    expect(sanitizeSettings(fields, 'primary')).toMatchObject({
+      prefix: '',
+      maxLength: 100,
+    });
   });
 });
