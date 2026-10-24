@@ -280,6 +280,69 @@ td select[data-key='match'] {
   font-size: 12px;
   white-space: nowrap;
 }
+.mobile-rules {
+  display: none;
+}
+.card-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.rule-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  margin: 12px 0;
+}
+.rule-card > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 12px;
+  list-style: none;
+  border-radius: 14px;
+}
+.rule-card > summary::-webkit-details-marker {
+  display: none;
+}
+.rule-card > summary::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+}
+.rule-card[open] > summary::before {
+  transform: rotate(45deg);
+}
+.rule-summary-line {
+  display: block;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+.badge {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 1px 6px;
+  margin-inline-start: 6px;
+  background: var(--tint);
+  color: var(--accent);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.rule-editor {
+  display: grid;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
 .event {
   border-left: 3px solid var(--line);
   padding: 4px 0 18px 22px;
@@ -310,6 +373,12 @@ footer {
   font-size: 12px;
 }
 @media (max-width: 700px) {
+  .mobile-rules {
+    display: block;
+  }
+  .desktop-rules {
+    display: none;
+  }
   #app {
     padding: 20px 16px;
   }

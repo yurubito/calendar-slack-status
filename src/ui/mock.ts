@@ -1,6 +1,8 @@
 import { defaultSettings } from '../core/decision';
 import { sanitizeSettings } from '../adapters/settings';
 import type { Settings } from '../core/types';
+import { upcomingWindow } from '../adapters/calendar-time';
+const timeZone = 'Asia/Tokyo';
 let settings: Settings = defaultSettings('sample');
 let initialized = false;
 const methods: Record<string, (...args: unknown[]) => unknown> = {
@@ -33,23 +35,24 @@ const methods: Record<string, (...args: unknown[]) => unknown> = {
     return settings;
   },
   listUpcomingEvents() {
-    return settings.calendarIds.includes('sample')
+    const { from } = upcomingWindow(Date.now(), timeZone);
+    const events = settings.calendarIds.includes('sample')
       ? ['Team sync', 'Lesson', 'Focus time'].map((title, i) => {
-          const start = new Date();
-          start.setHours(9 + i * 2, 0, 0, 0);
+          const start = from + (9 + i * 2) * 3600000;
           return {
             id: `sample-${i}`,
             calendarId: 'sample',
             ...(i === 1 ? { seriesId: 'sample-series' } : {}),
             title,
-            start: start.getTime(),
-            end: start.getTime() + 3600000,
+            start,
+            end: start + 3600000,
             allDay: false,
             free: false,
             declined: false,
           };
         })
       : [];
+    return { events, timeZone };
   },
   notificationAction() {
     return { connected: false };

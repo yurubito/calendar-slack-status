@@ -1,4 +1,5 @@
 import type { CalendarEvent, CalendarReader } from '../core/types';
+import { calendarTimeZone, upcomingWindow } from './calendar-time';
 export interface CalendarEventLike {
   getId(): string;
   getTitle(): string;
@@ -28,12 +29,21 @@ export function mapCalendarEvent(
   };
 }
 export interface CalendarServiceLike {
+  getDefaultCalendar?(): { getTimeZone(): string };
   getCalendarById(
     id: string,
   ): { getEvents(from: Date, to: Date): CalendarEventLike[] } | null;
 }
 export class AppsCalendarReader implements CalendarReader {
   constructor(private service: CalendarServiceLike) {}
+  readUpcoming(ids: readonly string[], now: number, fallbackZone: string) {
+    const timeZone = calendarTimeZone(
+      () => this.service.getDefaultCalendar?.().getTimeZone() ?? '',
+      fallbackZone,
+    );
+    const { from, to } = upcomingWindow(now, timeZone);
+    return { timeZone, events: this.readEvents(ids, from, to) };
+  }
   readEvents(ids: readonly string[], from: number, to: number) {
     return ids
       .flatMap((id) => {

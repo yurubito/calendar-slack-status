@@ -27,14 +27,10 @@ export function saveSettings(value: unknown) {
   return s;
 }
 export function listUpcomingEvents() {
-  const from = new Date();
-  from.setHours(0, 0, 0, 0);
-  const to = new Date(from);
-  to.setDate(to.getDate() + 8);
-  return new AppsCalendarReader(CalendarApp).readEvents(
+  return new AppsCalendarReader(CalendarApp).readUpcoming(
     store().load().calendarIds,
-    from.getTime(),
-    to.getTime(),
+    Date.now(),
+    Session.getScriptTimeZone(),
   );
 }
 export function notificationAction() {

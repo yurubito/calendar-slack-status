@@ -1,5 +1,11 @@
 export const messages = {
   en: {
+    noKeyword: '(no keyword)',
+    eventTitle: '(event title)',
+    disabled: 'Disabled',
+    expandAll: 'Expand all',
+    collapseAll: 'Collapse all',
+    customized: 'Customized',
     customText: 'Override text (empty uses event title)',
     customEmoji: 'Override emoji',
     brand: 'Calendar Slack Status',
@@ -79,6 +85,12 @@ export const messages = {
     actions: 'Actions',
   },
   ja: {
+    noKeyword: '（キーワードなし）',
+    eventTitle: '（予定名）',
+    disabled: '無効',
+    expandAll: 'すべて開く',
+    collapseAll: 'すべて閉じる',
+    customized: '上書きあり',
     customText: '文言を上書き（空なら予定名）',
     customEmoji: '絵文字を上書き',
     brand: 'Calendar Slack Status',
