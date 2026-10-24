@@ -1,0 +1,437 @@
+:root {
+  --bg: #f5f4ef;
+  --surface: #fff;
+  --ink: #243d35;
+  --muted: #52655d;
+  --accent: #27664e;
+  --tint: #e4efe7;
+  --line: #d2ded5;
+}
+* {
+  box-sizing: border-box;
+  min-width: 0;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font:
+    14px/1.65 system-ui,
+    'Segoe UI',
+    'Yu Gothic',
+    Meiryo,
+    sans-serif;
+}
+#app {
+  max-width: 1100px;
+  margin: auto;
+  padding: 28px 32px;
+}
+h1 {
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.3;
+  margin: 12px 0;
+}
+h2 {
+  font-size: 19px;
+}
+p {
+  overflow-wrap: anywhere;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.topbar label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topbar select {
+  width: auto;
+}
+nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin: 24px 0 0;
+  padding: 5px 3px 12px;
+}
+nav button {
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: transparent;
+}
+nav [aria-current] {
+  background: var(--tint);
+  border-color: var(--accent);
+}
+.intro {
+  text-align: center;
+  margin: 30px 0;
+}
+.intro p,
+.hint,
+footer {
+  color: var(--muted);
+}
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.panel {
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  background: var(--surface);
+  margin: 24px 0;
+}
+.section-title {
+  font-size: 19px;
+  font-weight: 700;
+}
+.primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+  max-width: 100%;
+}
+button,
+select,
+input:not([type='checkbox']):not([type='radio']) {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 9px 12px;
+}
+button {
+  cursor: pointer;
+  font-weight: 700;
+  background: var(--surface);
+}
+button.primary {
+  background: var(--accent);
+  color: white;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--accent);
+}
+input:not([type='checkbox']):not([type='radio']),
+select {
+  width: 100%;
+  background: white;
+}
+.check,
+.switch-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+.switch-control {
+  cursor: pointer;
+}
+.switch {
+  appearance: none;
+  width: 48px;
+  height: 28px;
+  background: var(--muted);
+  border-radius: 99px;
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+}
+.switch:checked {
+  background: var(--accent);
+}
+.switch:before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+}
+.switch:checked:before {
+  transform: translateX(20px);
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.field {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.mode {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin: 10px 0;
+}
+.mode:has(:checked) {
+  background: var(--tint);
+  border-color: var(--accent);
+}
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 16px 0;
+}
+.hint {
+  font-size: 12px;
+}
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+  text-align: left;
+}
+th,
+td {
+  padding: 10px 7px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+th {
+  font-size: 12px;
+  background: var(--tint);
+}
+td .field {
+  font-size: 0;
+  gap: 0;
+}
+/* The label text is hidden with font-size 0; keep the controls readable. */
+td .field input,
+td .field select {
+  font-size: 14px;
+}
+td input[type='text'] {
+  min-width: 100px;
+}
+td .check {
+  font-size: 12px;
+}
+/* Dim each part instead of the parent so the enable control stays fully visible. */
+.desktop-rules tr.is-disabled > td:not(:first-child),
+.rule-card.is-disabled > summary .rule-summary-line,
+.rule-card.is-disabled > summary::before,
+.rule-card.is-disabled .rule-editor > :not(.enable-control) {
+  opacity: 0.5;
+}
+td select[data-key='match'] {
+  min-width: 8em;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-width: 190px;
+}
+.actions button {
+  padding-inline: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mobile-rules {
+  display: none;
+}
+.card-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.rule-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  margin: 12px 0;
+}
+.rule-card > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 12px;
+  list-style: none;
+  border-radius: 14px;
+}
+.rule-card > summary::-webkit-details-marker {
+  display: none;
+}
+.rule-card > summary::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+}
+.rule-card[open] > summary::before {
+  transform: rotate(45deg);
+}
+.rule-summary-line {
+  display: block;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+.badge {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 1px 6px;
+  margin-inline-start: 6px;
+  background: var(--tint);
+  color: var(--accent);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.rule-editor {
+  display: grid;
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+.event {
+  border-left: 3px solid var(--line);
+  padding: 4px 0 18px 22px;
+  margin-top: 24px;
+}
+summary {
+  cursor: pointer;
+  min-height: 44px;
+  color: var(--accent);
+  padding: 10px 0;
+}
+.override-fields {
+  padding: 18px;
+  background: var(--tint);
+  border-radius: 14px;
+  margin: 12px 0;
+}
+details button {
+  margin: 8px 8px 0 0;
+}
+.savebar {
+  text-align: right;
+}
+#status {
+  min-height: 24px;
+}
+footer {
+  font-size: 12px;
+}
+@media (max-width: 700px) {
+  .mobile-rules {
+    display: block;
+  }
+  .desktop-rules {
+    display: none;
+  }
+  #app {
+    padding: 20px 16px;
+  }
+  .topbar {
+    align-items: flex-start;
+  }
+  .topbar strong {
+    max-width: 170px;
+  }
+  .topbar label {
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+  .panel {
+    padding: 22px 18px;
+  }
+  .fields {
+    grid-template-columns: 1fr;
+  }
+  .table-scroll {
+    overflow: visible;
+  }
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    min-width: 0;
+    width: 100%;
+  }
+  thead {
+    display: none;
+  }
+  tr {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg);
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+  td {
+    padding: 5px 0;
+    border: 0;
+  }
+  td .field {
+    font-size: 12px;
+    gap: 5px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .actions button {
+    display: inline-block;
+  }
+  .event {
+    padding-left: 14px;
+  }
+}
+
+.connection-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

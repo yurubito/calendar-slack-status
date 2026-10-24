@@ -8,10 +8,15 @@
   },
   "scripts": {
     "test": "vitest run",
-    "lint": "tsc --noEmit && eslint src vitest.config.ts eslint.config.js && prettier --check src package.json package-lock.json tsconfig.json vitest.config.ts eslint.config.js .prettierrc .clasp.json.example"
+    "lint": "tsc --noEmit && eslint src vitest.config.ts eslint.config.js && prettier --check src package.json package-lock.json tsconfig.json vitest.config.ts eslint.config.js .prettierrc .clasp.json.example",
+    "build": "node scripts/build.mjs",
+    "preview:build": "node scripts/build.mjs --preview",
+    "preview": "npm run preview:build && node scripts/preview.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/google-apps-script": "^2.0.13",
+    "esbuild": "^0.28.2",
     "eslint": "^10.13.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
