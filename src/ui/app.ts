@@ -6,13 +6,7 @@ import type {
   Settings,
 } from '../core/types';
 import { messages } from './strings';
-import {
-  mergeOverride,
-  reorder,
-  ruleSummary,
-  settleNotification,
-  updateCards,
-} from './logic';
+import { mergeOverride, reorder, ruleSummary, updateCards } from './logic';
 import type { RuleCards } from './logic';
 type Page = 'display' | 'rules' | 'events' | 'connection';
 type Key = keyof typeof messages.en;
@@ -23,10 +17,7 @@ let events: CalendarEvent[] = [];
 let timeZone = 'Etc/UTC';
 let cards: RuleCards = { nextId: 0, cards: [] };
 let page: Page = 'display';
-let busy = false;
-let manualPause = false;
-let notificationBusy = false;
-let duration = 'half';
+let saveBusy = false;
 const root = document.querySelector<HTMLDivElement>('#app')!;
 const t = (k: Key) => messages[locale][k];
 const esc = (v: unknown) =>
@@ -51,8 +42,8 @@ function call<T>(name: string, ...args: unknown[]): Promise<T> {
 function field(key: Key, value: unknown, type = 'text', attrs = '') {
   return `<label class="field">${t(key)}<input data-key="${key}" type="${type}" value="${esc(value)}" ${attrs}></label>`;
 }
-function switchControl(key: string, label: Key, value: boolean, extra = '') {
-  return `<label class="switch-control ${key === 'enabled' ? 'enable-control' : ''}"><input class="switch" data-key="${key}" type="checkbox" role="switch" ${value ? 'checked' : ''} ${extra}><span>${t(label)}</span></label>`;
+function switchControl(key: string, label: Key, value: boolean) {
+  return `<label class="switch-control ${key === 'enabled' ? 'enable-control' : ''}"><input class="switch" data-key="${key}" type="checkbox" role="switch" ${value ? 'checked' : ''}><span>${t(label)}</span></label>`;
 }
 function check(key: Key, value: unknown) {
   return switchControl(key, key, Boolean(value));
@@ -118,11 +109,11 @@ async function refreshEvents() {
 }
 function content() {
   if (page === 'display')
-    return `<section class="panel notification-panel"><div class="notification-controls"><div class="notification-control">${switchControl('manualPause', 'pause', manualPause, 'aria-describedby="pause-state"' + (notificationBusy ? ' disabled' : ''))}<p id="pause-state" class="switch-state" aria-live="polite">${t(manualPause ? 'pauseOn' : 'pauseOff')}</p></div><div class="notification-control">${check('automatic', settings.automatic)}</div></div><div id="pause-duration">${select('duration', duration, ['half', 'hour', 'untilEvent', 'manual'])}</div><p class="hint">${t('autoHint')}</p><p class="hint">${t('notConnected')}</p></section><section class="panel"><fieldset><legend class="section-title">${t('reflection')}</legend>${(['title', 'fixed', 'none'] as const).map((v) => `<label class="mode"><input type="radio" name="displayMode" value="${v}" ${settings.displayMode === v ? 'checked' : ''}>${t(v)}</label>`).join('')}</fieldset><div class="fields"><div id="custom-status" ${settings.displayMode === 'fixed' ? '' : 'hidden'}>${field('fixedText', settings.fixedText)}</div>${field('emoji', settings.emoji)}</div>${switchControl('pauseNotifications', 'pauseDuring', settings.pauseNotifications)}</section>`;
+    return `<section class="panel"><fieldset><legend class="section-title">${t('reflection')}</legend>${(['title', 'fixed', 'none'] as const).map((v) => `<label class="mode"><input type="radio" name="displayMode" value="${v}" ${settings.displayMode === v ? 'checked' : ''}>${t(v)}</label>`).join('')}</fieldset><div class="fields"><div id="custom-status" ${settings.displayMode === 'fixed' ? '' : 'hidden'}>${field('fixedText', settings.fixedText)}</div>${field('emoji', settings.emoji)}</div>${switchControl('pauseNotifications', 'pauseDuring', settings.pauseNotifications)}</section>`;
   if (page === 'rules') return rulesContent();
   if (page === 'events')
     return `<section class="panel"><p class="hint">${t('eventHint')}</p>${events.length ? '' : `<p>${t('empty')}</p>`}${events.map((e, i) => `<article class="event"><p class="hint">${esc(new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short', timeZone }).format(e.start))} – ${esc(new Intl.DateTimeFormat(locale, { timeStyle: 'short', timeZone }).format(e.end))}</p><h2>${esc(e.title)}</h2><details data-event="${i}"><summary>${t('override')}${isCustomized(e) ? `<span class="badge">${t('customized')}</span>` : ''}</summary>${select('scope', 'occurrence', e.seriesId ? ['occurrence', 'series'] : ['occurrence'])}<div class="override-fields"></div>${button('override', 'save')}${button('reset', 'reset')}</details></article>`).join('')}</section>`;
-  return `<section class="panel"><h2>${t('connection')}</h2>${button('connect', 'connect', 'disabled')}<p class="hint">${t('notConnected')}</p></section><section class="panel"><h2>${t('other')}</h2><fieldset><legend>${t('calendars')}</legend>${calendars.map((c) => `<label class="check"><input type="checkbox" data-calendar="${esc(c.id)}" ${settings.calendarIds.includes(c.id) ? 'checked' : ''}>${esc(c.name)}</label>`).join('')}</fieldset>${check('ignoreAllDay', settings.ignoreAllDay)}${check('ignoreFree', settings.ignoreFree)}<p class="hint">${t('declined')}</p><div class="fields">${select('overlap', settings.overlap, ['latestStart', 'ruleOrder'])}${field('beforeMinutes', settings.beforeMinutes, 'number', 'min="0" max="1440" required')}${field('afterMinutes', settings.afterMinutes, 'number', 'min="0" max="1440" required')}</div></section>`;
+  return `<section class="panel"><h2>${t('connection')}</h2><div class="connection-actions">${button('connect', 'connect', 'disabled')}${button('disconnect', 'disconnect', 'disabled')}</div><p class="hint">${t('notConnected')}</p></section><section class="panel"><h2>${t('other')}</h2><fieldset><legend>${t('calendars')}</legend>${calendars.map((c) => `<label class="check"><input type="checkbox" data-calendar="${esc(c.id)}" ${settings.calendarIds.includes(c.id) ? 'checked' : ''}>${esc(c.name)}</label>`).join('')}</fieldset>${check('ignoreAllDay', settings.ignoreAllDay)}${check('ignoreFree', settings.ignoreFree)}<p class="hint">${t('declined')}</p><div class="fields">${select('overlap', settings.overlap, ['latestStart', 'ruleOrder'])}${field('beforeMinutes', settings.beforeMinutes, 'number', 'min="0" max="1440" required')}${field('afterMinutes', settings.afterMinutes, 'number', 'min="0" max="1440" required')}</div></section>`;
 }
 function render() {
   // Native toggle events may be queued; capture the actual state before replacing the DOM.
@@ -135,11 +126,10 @@ function render() {
   });
   document.documentElement.lang = locale;
   document.title = t('brand');
-  root.innerHTML = `<header><div class="topbar"><strong>${t('brand')}</strong><label>${t('language')}<select id="language">${(['en', 'ja'] as const).map((l) => `<option value="${l}" ${locale === l ? 'selected' : ''}>${t(l)}</option>`).join('')}</select></label></div><nav aria-label="${t('brand')}">${(['display', 'rules', 'events', 'connection'] as Page[]).map((p) => `<button type="button" data-page="${p}" ${page === p ? 'aria-current="page"' : ''}>${t(p)}</button>`).join('')}</nav></header><div class="intro"><p class="eyebrow">${t('brand')}</p><h1 tabindex="-1">${t(page)}</h1></div><form><main>${content()}</main><div class="savebar"><button class="primary" type="submit" ${busy ? 'disabled' : ''}>${busy ? t('loading') : t('save')}</button></div></form><p id="status" role="status" aria-live="polite"></p>${import.meta.env.PREVIEW ? `<footer>${t('sample')}</footer>` : ''}`;
+  root.innerHTML = `<header><div class="topbar"><strong>${t('brand')}</strong><label>${t('language')}<select id="language">${(['en', 'ja'] as const).map((l) => `<option value="${l}" ${locale === l ? 'selected' : ''}>${t(l)}</option>`).join('')}</select></label></div><nav aria-label="${t('brand')}">${(['display', 'rules', 'events', 'connection'] as Page[]).map((p) => `<button type="button" data-page="${p}" ${page === p ? 'aria-current="page"' : ''}>${t(p)}</button>`).join('')}</nav></header><div class="intro"><p class="eyebrow">${t('brand')}</p><h1 tabindex="-1">${t(page)}</h1></div><form><main>${content()}</main><div class="savebar"><button class="primary" type="submit" ${saveBusy ? 'disabled' : ''}>${saveBusy ? t('loading') : t('save')}</button></div></form><p id="status" role="status" aria-live="polite"></p>${import.meta.env.PREVIEW ? `<footer>${t('sample')}</footer>` : ''}`;
   root
     .querySelectorAll<HTMLDetailsElement>('[data-event]')
     .forEach((d) => fillOverride(d));
-  updateNotificationUI();
 }
 function target(d: HTMLElement) {
   const e = events[Number(d.dataset.event)],
@@ -181,41 +171,6 @@ function readOptions(d: HTMLElement): EventOptions {
 }
 function notify(key: Key) {
   document.querySelector('#status')!.textContent = t(key);
-}
-function updateNotificationUI() {
-  const control = root.querySelector<HTMLInputElement>(
-    '[data-key="manualPause"]',
-  );
-  if (control) {
-    control.checked = manualPause;
-    control.disabled = notificationBusy;
-  }
-  const state = root.querySelector<HTMLElement>('#pause-state');
-  if (state) state.textContent = t(manualPause ? 'pauseOn' : 'pauseOff');
-  const choice = root.querySelector<HTMLSelectElement>('[data-key="duration"]');
-  if (choice) choice.disabled = notificationBusy;
-}
-async function requestNotification(requested: boolean) {
-  if (notificationBusy) return;
-  manualPause = requested;
-  notificationBusy = true;
-  updateNotificationUI();
-  try {
-    const response = await call<unknown>(
-      'notificationAction',
-      requested ? 'pause' : 'resume',
-      duration,
-    );
-    const result = settleNotification(requested, response);
-    manualPause = result.paused;
-    if (result.failed) notify('notConnected');
-  } catch {
-    manualPause = false;
-    notify('notConnected');
-  } finally {
-    notificationBusy = false;
-    updateNotificationUI();
-  }
 }
 function editRule(el: HTMLInputElement): boolean {
   const row = el.closest<HTMLElement>('[data-rule]');
@@ -277,15 +232,6 @@ root.addEventListener(
 root.addEventListener('change', (event) => {
   const el = event.target as HTMLInputElement;
   if (editRule(el)) return;
-  if (el.dataset.key === 'manualPause') {
-    void requestNotification(el.checked);
-    return;
-  }
-  if (el.dataset.key === 'duration') {
-    duration = el.value;
-    if (manualPause) void requestNotification(true);
-    return;
-  }
   if (el.id === 'language') {
     locale = el.value as 'en' | 'ja';
     settings = { ...settings, locale };
@@ -427,8 +373,8 @@ root.addEventListener('click', async (event) => {
   }
 });
 async function save() {
-  if (busy) return;
-  busy = true;
+  if (saveBusy) return;
+  saveBusy = true;
   root.querySelector<HTMLButtonElement>('button[type="submit"]')!.disabled =
     true;
   try {
@@ -439,7 +385,7 @@ async function save() {
   } catch {
     notify('error');
   } finally {
-    busy = false;
+    saveBusy = false;
     root.querySelector<HTMLButtonElement>('button[type="submit"]')!.disabled =
       false;
   }

@@ -1,15 +1,6 @@
 import type { EventOverride, Locale, Rule } from '../core/types';
 import { messages } from './strings';
 
-export function settleNotification(requested: boolean, result: unknown) {
-  const connected =
-    result !== null &&
-    typeof result === 'object' &&
-    'connected' in result &&
-    result.connected === true;
-  return { paused: connected && requested, failed: !connected };
-}
-
 export function truncateSummary(text: string, limit: number): string {
   const points = Array.from(text);
   const size = Math.max(1, Math.floor(limit));

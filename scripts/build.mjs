@@ -36,7 +36,7 @@ if (!preview) {
     globalName: 'Server',
     target: 'es2020',
     footer: {
-      js: 'function doGet(){return Server.doGet();}\nfunction getSettings(locale){return Server.getSettings(locale);}\nfunction saveSettings(value){return Server.saveSettings(value);}\nfunction listUpcomingEvents(){return Server.listUpcomingEvents();}\nfunction notificationAction(){return Server.notificationAction();}',
+      js: 'function doGet(){return Server.doGet();}\nfunction getSettings(locale){return Server.getSettings(locale);}\nfunction saveSettings(value){return Server.saveSettings(value);}\nfunction listUpcomingEvents(){return Server.listUpcomingEvents();}',
     },
   });
   await copyFile('src/appsscript.json', 'dist/appsscript.json');

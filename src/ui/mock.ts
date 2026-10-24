@@ -54,9 +54,6 @@ const methods: Record<string, (...args: unknown[]) => unknown> = {
       : [];
     return { events, timeZone };
   },
-  notificationAction() {
-    return { connected: false };
-  },
 };
 function runner(
   success: (value: unknown) => void = () => {},

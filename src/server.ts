@@ -33,6 +33,3 @@ export function listUpcomingEvents() {
     Session.getScriptTimeZone(),
   );
 }
-export function notificationAction() {
-  return { connected: false };
-}
