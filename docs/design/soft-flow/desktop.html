@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soft Flow | desktop settings mockup</title>
+  <style>
+    :root { --bg:#F5F4EF;--surface:#FFFFFF;--ink:#243D35;--muted:#52655D;--accent:#27664E;--tint:#E4EFE7;--line:#D2DED5;--radius:30px;--control-radius:14px; }
+    
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); color: var(--ink); }
+body { margin: 0; font: 14px/1.65 system-ui, -apple-system, 'Segoe UI', 'Yu Gothic', Meiryo, sans-serif; }
+body * { min-width: 0; }
+button, input, select { font-family: inherit; }
+h1, h2, h3, p { margin: 0; }
+h1 { font-size: clamp(28px, 3vw, 40px); line-height: 1.3; letter-spacing: -.035em; }
+h2 { font-size: 19px; line-height: 1.4; }
+h3 { font-size: 16px; }
+p, label, summary, th, td, a { overflow-wrap: anywhere; }
+button, input, select { font: inherit; color: inherit; max-width: 100%; }
+button, select, input:not([type=checkbox]):not([type=radio]) { min-height: 44px; }
+button { cursor: pointer; font-weight: 700; white-space: normal; }
+button, select, input[type=text], input[type=number] {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--control-radius);
+  padding: 9px 11px;
+}
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 3px;
+}
+input[type=checkbox], input[type=radio] { accent-color: var(--accent); flex-shrink: 0; }
+input[type=text], input[type=number], select { width: 100%; }
+a { color: var(--accent); text-underline-offset: 4px; }
+small, .hint, .muted { color: var(--muted); }
+small, .hint { font-size: 12px; }
+.hint { margin-top: 12px; }
+.eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.frame { width: 100%; max-width: 1280px; margin-inline: auto; }
+.page { padding: 28px 32px 32px; }
+.topbar, .section-head, .line, .event-heading, .rule-heading {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.topbar { margin-bottom: 32px; }
+.brand { font-size: 15px; font-weight: 800; line-height: 1.4; }
+.language { display: flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 12px; }
+.language select { width: 88px; font-size: 12px; }
+.intro { margin-bottom: 28px; }
+.intro .eyebrow { margin-bottom: 9px; color: var(--accent); }
+.intro p { margin-top: 10px; }
+.panel { padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.section-head { margin-bottom: 16px; flex-wrap: wrap; }
+.section-head .number { margin-right: 8px; color: var(--accent); font-weight: 800; }
+.badge { font-size: 11px; padding: 4px 10px; border-radius: 99px; background: var(--tint); color: var(--accent); font-weight: 750; }
+.hero { background: var(--tint); }
+.hero h2 { font-size: 28px; margin: 9px 0; }
+.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.pause-button { display: block; width: 100%; min-height: 68px; font-size: 21px; margin: 22px 0 18px; }
+.duration { display: grid; gap: 7px; }
+.auto { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.switch-label { display: flex; align-items: center; gap: 12px; min-height: 44px; cursor: pointer; }
+.switch { appearance: none; width: 48px; height: 28px; margin: 0; background: #64717C; border-radius: 99px; position: relative; flex-shrink: 0; }
+.switch:checked { background: var(--accent); }
+.switch::before { content: ''; width: 20px; height: 20px; background: white; border-radius: 50%; position: absolute; left: 4px; top: 4px; }
+.switch:checked::before { transform: translateX(20px); }
+.modes { display: grid; gap: 9px; border: 0; margin: 0 0 18px; padding: 0; }
+.modes legend { margin-bottom: 8px; font-size: 12px; color: var(--muted); }
+.mode { display: flex; gap: 9px; align-items: center; padding: 10px 12px; min-height: 48px; border: 1px solid var(--line); border-radius: var(--control-radius); }
+.mode:has(:checked) { border-color: var(--accent); background: var(--tint); }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: grid; gap: 5px; font-size: 12px; font-weight: 600; }
+.full { grid-column: 1 / -1; }
+.check { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: 12px; }
+.save { margin-top: 14px; }
+.rule-editors { display: grid; gap: 16px; margin-top: 18px; }
+.rule-editor { padding: 18px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--control-radius); }
+.rule-heading { margin-bottom: 12px; }
+.rule-actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 12px; }
+.rule-actions button { flex: 1 1 auto; font-size: 12px; }
+.table-scroll { overflow-x: auto; width: 100%; max-width: 100%; border: 1px solid var(--line); border-radius: var(--control-radius); margin-top: 16px; }
+table { width: 100%; min-width: 800px; border-collapse: collapse; text-align: left; font-size: 12px; }
+caption { text-align: left; padding: 10px 12px; font-weight: 600; }
+th, td { padding: 10px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+th { background: var(--tint); }
+td input[type=text] { min-width: 90px; }
+td select { min-width: 86px; }
+td .match { display: grid; gap: 6px; }
+td .row-actions { display: flex; gap: 4px; }
+td .row-actions button { min-width: 38px; padding-inline: 7px; }
+.event-list { display: grid; gap: 16px; margin-top: 18px; }
+.event { border-top: 1px solid var(--line); padding-top: 16px; }
+.event-heading { align-items: flex-start; flex-wrap: wrap; }
+.time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; font-weight: 700; }
+.event summary { color: var(--accent); cursor: pointer; padding-block: 12px; min-height: 44px; font-weight: 650; }
+.override { padding: 16px; background: var(--tint); border-radius: var(--control-radius); }
+.connection .connect { width: 100%; margin-top: 18px; border-color: var(--accent); color: var(--accent); }
+.footer { margin-top: 28px; color: var(--muted); font-size: 12px; display: grid; gap: 4px; }
+.statusbar { display: flex; gap: 14px; flex-wrap: wrap; background: var(--ink); color: #fff; padding: 12px 16px; font-size: 12px; }
+.statusbar strong { color: #D4E7FF; }
+.sidebar { background: #18293B; color: #fff; padding: 28px 22px; }
+.sidebar strong { font-size: 15px; line-height: 1.5; display: block; }
+.sidebar nav { display: grid; gap: 8px; margin-top: 30px; }
+.sidebar a { color: #E0EBFF; text-decoration: none; padding: 10px 12px; border-radius: 4px; font-size: 13px; }
+.sidebar a:first-child { background: #29435D; }
+.sidebar p { margin-top: 32px; color: #C5D3E2; font-size: 11px; }
+@media (max-width: 700px) {
+  body { font-size: 14px; }
+  .page { padding: 20px 16px 28px; }
+  .topbar { gap: 8px; align-items: flex-start; margin-bottom: 24px; }
+  .brand { max-width: 174px; font-size: 13px; }
+  .language { gap: 4px; font-size: 11px; }
+  .language select { width: 78px; padding-inline: 6px; }
+  .panel { padding: 20px; }
+  .intro { margin-bottom: 22px; }
+  h1 { font-size: 29px; }
+  .hero h2 { font-size: 25px; }
+  .section-head { gap: 8px; }
+  .section-head h2 { font-size: 18px; }
+  .section-head > button { font-size: 12px; }
+  .fields { gap: 10px; }
+  .rule-editor { padding: 14px; }
+  .auto { flex-wrap: wrap; gap: 8px; }
+  .switch-label { width: 100%; justify-content: space-between; }
+  .event-heading .badge { align-self: flex-start; }
+}
+
+    
+          .page { max-width: 948px; margin: auto; padding: 36px 44px 48px; }
+          .intro { text-align: center; padding: 20px 0 12px; }
+          .content { display: grid; grid-template-columns: minmax(0, 1fr); gap: 30px; }
+          .panel { padding: 34px; }
+          .hero { text-align: center; padding: 44px 60px; border: 0; }
+          .hero .pause-button { width: min(100%, 380px); min-height: 92px; border-radius: 999px; margin: 26px auto 22px; }
+          .hero .duration { max-width: 380px; margin: auto; text-align: left; }
+          .hero .auto { text-align: left; }
+          .modes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+          .event { border-left: 3px solid var(--line); border-top: 0; padding: 4px 0 4px 22px; }
+          .connection { text-align: center; }
+          .connection .connect { width: min(100%, 320px); border-radius: 99px; }
+          @media (max-width: 700px) {
+            .page { padding: 22px 16px 30px; }
+            .intro { padding: 8px 0; }
+            .content { gap: 22px; }
+            .panel { padding: 22px 18px; }
+            .hero { padding: 28px 20px; }
+            .hero .pause-button { min-height: 88px; font-size: 21px; }
+            .modes { grid-template-columns: minmax(0, 1fr); }
+            .event { padding-left: 14px; }
+          }
+        
+    .frame { max-width: 1280px; }
+  </style>
+</head>
+<!-- Visible UI copy is grouped in the body. This is a Japanese-only static proposal. -->
+<body>
+<div class="frame">
+
+<div class="page">
+  <header class="topbar"><div class="brand">Calendar Slack Status</div><label class="language">言語<select disabled aria-label="言語選択の見本"><option>日本語</option><option>English</option></select></label></header>
+  <div class="intro"><p class="eyebrow">Soft Flow / SETTINGS</p><h1>予定のあいだに、ひと呼吸。</h1><p class="muted">カレンダーに合わせて、ステータスと通知を切り替えます。</p></div>
+  
+  <main class="content">
+<section class="panel hero" id="notifications" aria-labelledby="notification-title">
+  <div class="eyebrow">NOTIFICATIONS / 今の状態</div>
+  <h2 id="notification-title">通知は受信中</h2>
+  <p>集中したいときは、必要な時間だけひと休み。</p>
+  <button class="primary pause-button" type="button">通知を止める</button>
+  <label class="duration">停止する時間
+    <select><option>30分</option><option>1時間</option><option>今の予定が終わるまで</option><option >自分で再開するまで</option></select>
+  </label>
+  <div class="auto"><label class="switch-label"><strong>自動で切り替える</strong><input class="switch" type="checkbox" role="switch" checked></label><span class="badge">ON · 5分ごと</span></div>
+  <p class="hint">OFFにするとステータスも通知も自動では変わりません。手動で再開するまでの停止は、自動では解除しません。</p>
+</section>
+<section class="panel display" id="display">
+  <div class="section-head"><h2><span class="number">01</span>表示のモード</h2></div>
+  <fieldset class="modes"><legend>基本の出し方</legend>
+    <label class="mode"><input type="radio" name="display-mode" checked>予定名をそのまま出す</label>
+    <label class="mode"><input type="radio" name="display-mode">決まった文言だけ出す</label>
+    <label class="mode"><input type="radio" name="display-mode">出さない（通知だけ）</label>
+  </fieldset>
+  <div class="fields">
+    <label class="field full">決まった文言<input type="text" value="予定あり"></label>
+    <label class="field">絵文字<input type="text" value="📅"></label>
+    <label class="field">接頭辞<input type="text" placeholder="例：📅 "></label>
+    <label class="field">文字数の上限<input type="number" min="1" max="100" value="100"></label>
+    <label class="field">基本の通知<select><option>止めない</option><option>止める</option></select></label>
+  </div>
+  <p class="hint">プレビュー：📅 Team sync<br>予定の終了時に消去。手で付けたSlackステータスは上書きしません。</p>
+  <button class="save" type="button">表示設定を保存</button>
+</section>
+<section class="panel events" id="today">
+  <div class="section-head"><h2><span class="number">03</span>今日の予定</h2><span class="badge">3件 · サンプル</span></div>
+  <p class="muted">今日〜1週間先の予定を確認する画面の、今日の例です。</p>
+  <div class="event-list"><article class="event">
+    <div class="event-heading"><div><p class="time">09:00–09:30</p><h3>💬 Team sync</h3></div><span class="badge">基本設定</span></div>
+    <details ><summary>Team sync の上書き</summary>
+      <div class="override"><div class="fields">
+        <label class="field full">出す文言<input type="text" value="Team sync"></label>
+        <label class="field">絵文字<input type="text" value="💬"></label>
+        <label class="field">通知<select><option >止める</option><option selected>止めない</option></select></label>
+        <label class="field full">適用範囲<select><option>この回だけ</option><option>毎回</option></select></label>
+        <label class="check full"><input type="checkbox">この予定を無視する</label>
+      </div><button class="save" type="button">上書きを保存</button></div>
+    </details>
+  </article><article class="event">
+    <div class="event-heading"><div><p class="time">11:00–12:00</p><h3>📚 Lesson</h3></div><span class="badge">上書きあり</span></div>
+    <details open><summary>Lesson の上書き</summary>
+      <div class="override"><div class="fields">
+        <label class="field full">出す文言<input type="text" value="Learning"></label>
+        <label class="field">絵文字<input type="text" value="📚"></label>
+        <label class="field">通知<select><option selected>止める</option><option >止めない</option></select></label>
+        <label class="field full">適用範囲<select><option>この回だけ</option><option>毎回</option></select></label>
+        <label class="check full"><input type="checkbox">この予定を無視する</label>
+      </div><button class="save" type="button">上書きを保存</button></div>
+    </details>
+  </article><article class="event">
+    <div class="event-heading"><div><p class="time">14:00–15:30</p><h3>🎯 Focus time</h3></div><span class="badge">ルール適用</span></div>
+    <details ><summary>Focus time の上書き</summary>
+      <div class="override"><div class="fields">
+        <label class="field full">出す文言<input type="text" value="Focus time"></label>
+        <label class="field">絵文字<input type="text" value="🎯"></label>
+        <label class="field">通知<select><option selected>止める</option><option >止めない</option></select></label>
+        <label class="field full">適用範囲<select><option>この回だけ</option><option>毎回</option></select></label>
+        <label class="check full"><input type="checkbox">この予定を無視する</label>
+      </div><button class="save" type="button">上書きを保存</button></div>
+    </details>
+  </article></div>
+  <p class="hint">優先順位：予定ごとの設定 ＞ キーワード ＞ 基本設定<br>カレンダーは読み取り専用です。</p>
+</section>
+<section class="panel rules" id="rules">
+  <div class="section-head"><h2><span class="number">02</span>キーワードのルール</h2><button type="button">＋ ルール追加</button></div>
+  <p class="muted">上から順に照合し、最初に一致した有効なルールを使います。</p>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="キーワードルール表。必要に応じて表の中だけ横スクロールできます。">
+  <table><caption>サンプルルール · 上の行が優先</caption>
+    <thead><tr><th scope="col">有効・順番</th><th scope="col">キーワード・照合</th><th scope="col">出す文言</th><th scope="col">絵文字</th><th scope="col">通知</th><th scope="col">無視</th><th scope="col">並べ替え・削除</th></tr></thead>
+    <tbody><tr>
+      <td><label class="check"><input type="checkbox" checked aria-label="ルール1を有効にする">01</label></td>
+      <td><div class="match"><input type="text" value="Lesson" aria-label="ルール1のキーワード"><select aria-label="ルール1の照合方法"><option>含む</option><option>完全一致</option></select></div></td>
+      <td><input type="text" value="Learning" aria-label="ルール1の文言"></td>
+      <td><input type="text" value="📚" aria-label="ルール1の絵文字"></td>
+      <td><select aria-label="ルール1の通知"><option>止める</option><option>止めない</option></select></td>
+      <td><input type="checkbox" aria-label="ルール1の予定を無視する"></td>
+      <td><div class="row-actions"><button type="button" aria-label="ルール1を上へ">↑</button><button type="button" aria-label="ルール1を下へ">↓</button><button type="button" aria-label="ルール1を削除">削除</button></div></td>
+    </tr>
+<tr>
+      <td><label class="check"><input type="checkbox" checked aria-label="ルール2を有効にする">02</label></td>
+      <td><div class="match"><input type="text" value="Focus" aria-label="ルール2のキーワード"><select aria-label="ルール2の照合方法"><option>含む</option><option>完全一致</option></select></div></td>
+      <td><input type="text" value="{title}" aria-label="ルール2の文言"></td>
+      <td><input type="text" value="🎯" aria-label="ルール2の絵文字"></td>
+      <td><select aria-label="ルール2の通知"><option>止める</option><option>止めない</option></select></td>
+      <td><input type="checkbox" aria-label="ルール2の予定を無視する"></td>
+      <td><div class="row-actions"><button type="button" aria-label="ルール2を上へ">↑</button><button type="button" aria-label="ルール2を下へ">↓</button><button type="button" aria-label="ルール2を削除">削除</button></div></td>
+    </tr></tbody>
+  </table>
+</div>
+  <p class="hint">文言が空なら予定名を表示。&#123;title&#125; で予定名を差し込めます。有効のチェックを外すと一時無効になります。</p>
+  <button class="save" type="button">ルールを保存</button>
+</section>
+<section class="panel connection" id="connection">
+  
+  <div class="section-head"><h2>Slackとの接続</h2><span class="badge">未接続</span></div>
+  <p>つなぐと、ステータスと通知の切り替えを使えます。</p>
+  <button class="connect" type="button">Slack とつなぐ</button>
+  <p class="hint">現在は未接続。ほかのカードは接続後の設定を確認するための見本です。</p>
+</section>
+  </main>
+  <footer class="footer"><p>静的デザイン案 · 架空の予定のみ。保存・接続・通知操作は実行されません。</p><p>1280px / Soft Flow · 言語選択は配置見本です。</p></footer>
+</div>
+</div>
+</body>
+</html>
